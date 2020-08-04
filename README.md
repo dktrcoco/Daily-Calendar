@@ -19,3 +19,5 @@ I received significant help from my tutor Simon Rennock, as well as personal fri
 I was taught and guided by instructor Ron Bailey, along with the TA's Ankita Patel, Asha Tadimari, Hiram Abraham, Irwin Marcano, Marie Trull, and Radomir Fugiel.
 
 Link:
+
+https://dktrcoco.github.io/Daily-Calendar/.
