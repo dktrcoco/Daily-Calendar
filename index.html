@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <title>Work Day Scheduler</title>
+</head>
+
+<body>
+  <header class="jumbotron">
+    <h1 class="display-3">Work Day Scheduler</h1>
+    <p class="lead">A simple calendar app for scheduling your work day</p>
+    <p id="currentMoment" class="lead"></p>
+    <p id="currentDate" class="lead"></p>
+  </header>
+  <div class="container">
+
+    <!-- example on how to do this differently, it would apply to each hour and replace the table -->
+    <!-- <div class="row">
+      <div class="table-hour col-md-1">Hour</div>
+      <textarea class="table-heading col-md-10">Description</textarea>
+      <button class="table-submit col-md-1">Submit</button>
+    </div>
+  </div> -->
+
+  <table class="table">
+    <!-- Timeblocks go here -->
+    <thead class="thread-dark heading">
+      <tr>
+        <th scope="col" class="table-hour col-md-1">Hour</th>
+        <th scope="col" class="table-heading col-md-10">Description</th>
+        <th scope="col" class="table-submit col-md-1">Submit</th>
+      </tr>
+
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">9:00 - 10:00 AM</th>
+        <td class="btn time-block" id="9">
+          <textarea id="nine" class="eventDescription"></textarea>
+        </td>
+        <td class="btn material-icons md-dark md-inactive saveBtn">book</td>
+      </tr>
+      <tr>
+        <th scope="row">10:00 - 11:00 AM</th>
+        <td class="btn time-block" id="10">
+          <textarea id="ten" class="eventDescription"></textarea>
+        </td>
+        <td class="btn material-icons md-dark md-inactive saveBtn">book</td>
+      </tr>
+      <tr>
+        <th scope="row">11:00 AM - 12:00 PM</th>
+        <td class="btn time-block" id="11">
+          <textarea id="eleven" class="eventDescription"></textarea>
+        </td>
+        <td class="btn material-icons md-dark md-inactive saveBtn">book</td>
+      </tr>
+      <tr>
+        <th scope="row">12:00 - 1:00 PM</th>
+        <td class="btn time-block" id="12">
+          <textarea id="twelve" class="eventDescription"></textarea>
+        </td>
+        <td class="btn material-icons md-dark md-inactive saveBtn">book</td>
+      </tr>
+      <tr>
+        <th scope="row">1:00 - 2:00 PM</th>
+        <td class="btn time-block" id="13">
+          <textarea id="thirteen" class="eventDescription"></textarea>
+        </td>
+        <td class="btn material-icons md-dark md-inactive saveBtn">book</td>
+      </tr>
+      <tr>
+        <th scope="row">2:00 - 3:00 PM</th>
+        <td class="btn time-block" id="14">
+          <textarea id="fourteen" class="eventDescription"></textarea>
+        </td>
+        <td class="btn material-icons md-dark md-inactive saveBtn">book</td>
+      </tr>
+      <tr>
+        <th scope="row">3:00 - 4:00 PM</th>
+        <td class="btn time-block" id="15">
+          <textarea id="fifteen" class="eventDescription"></textarea>
+        </td>
+        <td class="btn material-icons md-dark md-inactive saveBtn">book</td>
+      </tr>
+      <tr>
+        <th scope="row">4:00 - 5:00 PM</th>
+        <td class="btn time-block" id="16">
+          <textarea id="sixteen" class="eventDescription"></textarea>
+        </td>
+        <td class="btn material-icons md-dark md-inactive saveBtn">book</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script>
+
+    var bookEventEl = document.querySelector("#bookEvent");
+    var timeBlockEl = document.querySelector(".time-block");
+    var eventDescriptionEl = document.querySelector(".eventDescription");
+
+    //object that gives a value to the hour on the calendar,
+    //then I compare the current hour to the values and set the background color
+    //at this point it would probably work better as an array but I'm afraid of breaking something
+    var tableObject = {
+      nineAM: 9,
+      tenAM: 10,
+      elevenAM: 11,
+      noon: 12,
+      onePM: 13,
+      twoPM: 14,
+      threePM: 15,
+      fourPM: 16
+    }
+
+    function currentHour() {
+      var d = new Date();
+      var newHour = d.getHours();
+      console.log(newHour);
+    }
+
+    function updateBackground() {
+      currentHour();
+      var hr = (new Date()).getHours(); //gets the current hour
+      // var descCell = document.eventDescriptionEl;
+      var values = Object.values(tableObject);
+      console.log(values[0]);
+
+      for (var i = 0; i < values.length; i++) {
+        if (values[i] < hr) {
+          //if time block is in the past, set color to light gray
+          document.getElementById(values[i]).style.backgroundColor = "lightgray";
+        }
+        else if (values[i] > hr) {
+          //if time block is in the future, set color to light green
+          document.getElementById(values[i]).style.backgroundColor = "lightgreen";
+        }
+        else {
+          //if time block is the current hour, set color to red
+          document.getElementById(values[i]).style.backgroundColor = "red";
+        }
+      }
+    }
+
+    updateBackground();
+
+
+    (function () {
+      var nowMoment = moment(); //defining a function to format and display the current date
+      var eDisplayMoment = document.getElementById("currentMoment"); //links and displays the output to the appropriate id
+      eDisplayMoment.innerHTML = nowMoment.format("dddd, MMMM Do YYYY, h:mm:ss a"); //generates the desired format of the date
+    })();
+
+    function saveSchedule(event) { //function for saving input in Description column
+
+      var value = $(this).parent().find("textarea").val(); //taking what's typed in the textarea and defining it as var value
+      var key = $(this).parent().find(".time-block").attr("id"); //taking the id of selected time-block and setting it to var key
+      localStorage.setItem(key, value);
+    }
+
+    //loop going over the business hours based on value of the time block (set by id)
+    for (var i = 9; i < 18; i++) { 
+      //pulls value from local storage and assigns it to textarea with matching id
+      $("#" + i + " textarea").val(localStorage.getItem(i)); 
+    };
+
+    //event listener for saving input in Description column
+    $(document).on("click", ".saveBtn", saveSchedule);
+
+  </script>
+</body>
+
+</html>
